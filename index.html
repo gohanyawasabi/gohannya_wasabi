@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="ja" class="scroll-smooth scroll-pt-24">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ごはんやさん わさび</title>
+
+    <!-- Tailwind CSS (CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts: style.css で指定している Kiwi Maru ＋ Noto Sans JP -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kiwi+Maru:wght@400;500&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Tailwind の色は style.css の :root と同じ値に揃えています（重複部分は style.css 優先） -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cream: {
+                            DEFAULT: '#fbf9f5',   /* --bg-color */
+                            dark: '#f3eee3'
+                        },
+                        wood: {
+                            light: '#5b7f69',
+                            DEFAULT: '#548a66',   /* --main-green */
+                            dark: '#3d6a4d'
+                        },
+                        vermilion: {
+                            light: '#f27a4d',
+                            DEFAULT: '#e7c459',   /* --accent-vermilion */
+                            dark: '#c9460f'
+                        },
+                        warmOrange: '#ff7746'  ,   /* --accent-orange */
+                        black:'000000'
+                    },
+                    fontFamily: {
+                        serif: ['"Kiwi Maru"', 'serif'],
+                        sans: ['"Noto Sans JP"', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- style.css は Tailwind の後に読み込む -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="antialiased selection:bg-vermilion selection:text-white flex flex-col min-h-screen">
+    <section class="thumbnail">
+        <img src="images/fried_chicken.png"　alt="から揚げ定食" class="food-image">
+        <h1 class="title">
+            <span>ご</span>
+            <span>は</span>
+            <span>ん</span>
+            <span>や</span>
+            <span>さ</span>
+            <span>ん</span>
+            <span>わ</span>
+            <span>さ</span>
+            <span>び</span>
+        </h1>
+        <h2 class="title2">旅の途中にほっとするごはん</h2> 
+    </section>
+    <!-- 1. ヘッダー / Navigation（背景色・下線・文字色は style.css の header に合わせる） -->
+    <header class="sticky top-0 z-50 shadow-sm">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-14 sm:h-16">
+                <!-- ロゴ / 店名 -->
+                <a href="#" class="flex items-center gap-2 group text-left">
+                    <span class="w-12 h-12 rounded-full bg-white flex items-center justify-center overflow-hidden shadow-md group-hover:scale-105 transition-transform">
+                        <img src="images/nikukyu.png" alt="" class="w-full h-full object-contain p-1">
+                    </span>
+                    <div class="flex flex-col leading-tight">
+                        <span class="text-xl sm:text-2xl font-serif font-bold tracking-wider text-white">ごはんやさん わさび</span>
+                        <span class="text-[10px] sm:text-xs text-white/80 tracking-widest font-sans">手づくり定食屋</span>
+                    </div>
+                </a>
+
+                <!-- デスクトップナビゲーション -->
+                <nav class="hidden md:flex items-center space-x-8 font-medium text-white text-sm tracking-wide">
+                    <a href="#about" class="hover:text-white/70 transition-colors">こだわり</a>
+                    <a href="#menu" class="hover:text-white/70 transition-colors">お品書き</a>
+                    <a href="#gallery" class="hover:text-white/70 transition-colors">店内の雰囲気</a>
+                    <a href="#info" class="hover:text-white/70 transition-colors">店舗情報・アクセス</a>
+                </nav>
+
+                <!-- 電話ボタン -->
+                <div class="hidden sm:flex items-center">
+                    <a href="tel:07037768413" class="bg-warmOrange hover:bg-vermilion-dark text-white text-xs sm:text-sm font-medium px-4 py-2.5 rounded-full shadow hover:shadow-md transition-all flex items-center gap-2">
+                        <i class="fa-solid fa-phone"></i>
+                        <span>070-3776-8413</span>
+                    </a>
+                </div>
+
+                <!-- ハンバーガーボタン（モバイル） -->
+                <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg text-white hover:bg-white/10 focus:outline-none" aria-label="メニューを開く">
+                    <i class="fa-solid fa-bars text-xl" id="menu-icon"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- モバイルメニュー -->
+        <div id="mobile-menu" class="hidden md:hidden bg-cream-dark border-b border-wood/10 px-4 pt-2 pb-6 space-y-3 font-medium text-center shadow-inner">
+            <a href="#about" class="mobile-link block py-2 border-b border-wood/10 text-wood-dark">こだわり</a>
+            <a href="#menu" class="mobile-link block py-2 border-b border-wood/10 text-wood-dark">お品書き</a>
+            <a href="#gallery" class="mobile-link block py-2 border-b border-wood/10 text-wood-dark">店内の雰囲気</a>
+            <a href="#info" class="mobile-link block py-2 text-wood-dark">店舗情報・アクセス</a>
+            <div class="pt-2">
+                <a href="tel:07037768413" class="inline-flex items-center justify-center gap-2 bg-vermilion text-white text-sm font-medium px-6 py-2.5 rounded-full w-full shadow">
+                    <i class="fa-solid fa-phone"></i>
+                    <span>お電話でのお問合せ</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow">
+        <!-- 2. ヒーローセクション / Hero Section -->
+        <section class="relative overflow-hidden py-12 lg:py-20">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+
+                    <!-- テキストエリア -->
+                    <div class="lg:col-span-6 space-y-6 text-center lg:text-left z-10">
+                        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-vermilion/15 text-wood-dark font-medium text-xs sm:text-sm">
+                            <span class="w-2 h-2 rounded-full bg-wood animate-pulse"></span>
+                            地元の手作り料理をご提供
+                        </div>
+
+                        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold text-wood leading-tight sm:leading-snug">
+                            旅の途中に<br>
+                            <span class="text-wood relative inline-block">
+                                ほっとするごはん
+                                <span class="absolute bottom-1 left-0 w-full h-2 bg-warmOrange/20 -z-10 rounded"></span>
+                            </span>
+                        </h1>
+
+                        <p class="text-wood-light text-sm sm:text-base leading-relaxed max-w-xl mx-auto lg:mx-0">
+                            温かい手作りのお食事をご用意してお待ちしております。どうぞ気軽にお立ち寄りください。
+                        </p>
+
+                        <!-- 特徴バッジ -->
+                        <div class="flex flex-wrap justify-center lg:justify-start gap-3 pt-2">
+                            <span class="bg-white/80 backdrop-blur border border-wood/10 text-wood-dark px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-medium shadow-sm flex items-center gap-1.5">
+                                <i class="fa-solid fa-square-parking text-warmOrange"></i> 駐車場 10台程度完備
+                            </span>
+                            <span class="bg-white/80 backdrop-blur border border-wood/10 text-wood-dark px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-medium shadow-sm flex items-center gap-1.5">
+                                <i class="fa-solid fa-bowl-rice text-warmOrange"></i> ご飯大盛り無料
+                            </span>
+                            <span class="bg-white/80 backdrop-blur border border-wood/10 text-wood-dark px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-medium shadow-sm flex items-center gap-1.5">
+                                <i class="fa-solid fa-users text-warmOrange"></i> お一人様・ご家族大歓迎
+                            </span>
+                        </div>
+
+                        <!-- アクションボタン -->
+                        <div class="pt-4 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+                            <a href="#menu" class="w-full sm:w-auto bg-warmOrange hover:bg-vermilion-dark text-white font-medium px-8 py-3.5 rounded-full shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-0.5 text-center">
+                                お品書きを見る <i class="fa-solid fa-arrow-down ml-2 text-xs"></i>
+                            </a>
+                            <a href="#info" class="w-full sm:w-auto bg-white hover:bg-cream-dark text-wood-dark border border-wood/20 font-medium px-6 py-3.5 rounded-full shadow-sm hover:shadow transition-all text-center">
+                                アクセス・営業時間
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- メイン画像ビジュアル -->
+                    <div class="lg:col-span-6 relative">
+                        <div class="relative mx-auto max-w-md lg:max-w-none">
+                            <!-- 装飾背景 -->
+                            <div class="absolute -top-4 -left-4 w-72 h-72 bg-warmOrange/10 rounded-full blur-2xl -z-10"></div>
+                            <div class="absolute -bottom-4 -right-4 w-72 h-72 bg-vermilion/10 rounded-full blur-2xl -z-10"></div>
+
+                            <!-- メイン画像フレーム -->
+                            <div class="relative rounded-2xl overflow-hidden shadow-2xl border-4 border-white">
+                                <img src="images/Karaage.png"
+                                     alt="ごはんやさん わさびの看板定食"
+                                     class="w-full h-[320px] sm:h-[420px] object-cover hover:scale-105 transition-transform duration-700">
+
+                                <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-6 text-white">
+                                    <span class="bg-vermilion text-white text-xs px-2.5 py-1 rounded font-bold tracking-wider mb-2 inline-block">一番人気</span>
+                                    <h3 class="text-xl sm:text-2xl font-serif font-bold">自家製鶏のから揚げの定食</h3>
+                                    <p class="text-xs sm:text-sm text-gray-200 mt-1">揚げたてサクサク！ジューシーな一番人気メニュー</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. こだわり / Concept -->
+        <section id="about" class="py-16 sm:py-24">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <!-- セクションタイトル -->
+                <div class="text-center space-y-2 mb-12 sm:mb-16">
+                    <span class="text-vermilion font-serif font-bold tracking-widest text-sm uppercase">Concept</span>
+                    <h2 class="text-2xl sm:text-3xl lg:text-4xl font-serif font-bold text-wood">ごはんやさん　わさびのこだわり</h2>
+                    <div class="w-12 h-0.5 bg-vermilion mx-auto mt-4"></div>
+                </div>
+
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+     <!-- こだわり 1 -->
+       <div class="bg-white rounded-2xl p-8 shadow-sm border border-wood/10 hover:shadow-md transition-shadow text-center space-y-4 flex flex-col items-center">
+              <div class="w-16 h-16 rounded-full bg-cream-dark flex items-center justify-center text-vermilion text-2xl mb-2">
+                 <i class="fa-solid fa-wheat-awn"></i>
+                        </div>
+                        <h3 class="text-xl font-serif font-bold text-wood">お料理はすべてご注文をいただいてからお作りしています。</h3>
+                        <p class="text-wood-light text-sm leading-relaxed">
+                            できたてのお料理をお召し上がりいただくため、一品一品心を込めて調理しております。
+                        </p>
+                    </div>
+ 
+                    <!-- こだわり 2 -->
+                    <div class="bg-white rounded-2xl p-8 shadow-sm border border-wood/10 hover:shadow-md transition-shadow text-center space-y-4 flex flex-col items-center">
+                        <div class="w-16 h-16 rounded-full bg-cream-dark flex items-center justify-center text-vermilion text-2xl mb-2">
+                            <i class="fa-solid fa-heart"></i>
+                        </div>
+                        <h3 class="text-xl font-serif font-bold text-wood">誰でもくつろげる空間</h3>
+                        <p class="text-wood-light text-sm leading-relaxed">
+                            カウンター席はお一人様でも気兼ねなく。お子様連れも大歓迎！ 温かいおもてなしでお迎えします。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        
+        </section>
+
+        <!-- 5. お品書き / Menu -->
+        <section id="menu" class="py-16 sm:py-24 bg-cream-dark/40 border-t border-wood/10">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+
+                <!-- セクションタイトル -->
+                <div class="text-center space-y-2 mb-10">
+                    <span class="text-vermilion font-serif font-bold tracking-widest text-sm uppercase">Menu</span>
+                    <h2 class="text-2xl sm:text-3xl lg:text-4xl font-serif font-bold text-wood">お品書き</h2>
+                    <p class="text-wood-light text-sm mt-2">※表示価格はすべて税込価格です。</p>
+                    <div class="w-12 h-0.5 bg-vermilion mx-auto mt-4"></div>
+                </div>
+
+                <!-- お品書き（メニュー画像表示） -->
+                <div class="menu-image-container">
+                    <p style="font-size: 0.9rem; color: #666; margin-bottom: 12px;">
+                        ※タップ（クリック）すると大きな画面で画像が確認できます
+                    </p>
+                    <div class="menu-wrapper" onclick="openModal()">
+                        <img src="images/menu.png" alt="メニュー表">
+                        <div class="zoom-overlay">
+                            🔍 画像を拡大する
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div hidden>
+            <!-- 6. 店内の雰囲気 / Gallery -->
+            <section id="gallery" class="py-16 sm:py-24">
+                <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+
+                    <!-- セクションタイトル -->
+                    <div class="text-center space-y-2 mb-12">
+                        <span class="text-vermilion font-serif font-bold tracking-widest text-sm uppercase">Atmosphere</span>
+                        <h2 class="text-2xl sm:text-3xl lg:text-4xl font-serif font-bold text-wood">店内の雰囲気</h2>
+                        <p class="text-wood-light text-sm mt-2">のんびりとお食事を楽しんでいただける温かい空間です。</p>
+                        <div class="w-12 h-0.5 bg-vermilion mx-auto mt-4"></div>
+                    </div>
+
+                    <!-- ギャラリー写真グリッド -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+
+                        <div class="group relative rounded-xl overflow-hidden shadow-sm h-64">
+                            <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=600&q=80" alt="お座敷・客席" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent flex items-end p-4">
+                                <span class="text-white font-medium text-sm"><i class="fa-solid fa-chair text-warmOrange mr-1.5"></i>座席</span>
+                            </div>
+                        </div>
+
+                        <div class="group relative rounded-xl overflow-hidden shadow-sm h-64">
+                            <img src="https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=600&q=80" alt="店舗外観" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent flex items-end p-4">
+                                <span class="text-white font-medium text-sm"><i class="fa-solid fa-store text-warmOrange mr-1.5"></i>外観</span>
+                            </div>
+                        </div>
+
+                        <div class="group relative rounded-xl overflow-hidden shadow-sm h-64">
+                            <img src="https://images.unsplash.com/photo-1506521781263-d8422e82f27a?auto=format&fit=crop&w=600&q=80" alt="広々駐車場" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent flex items-end p-4">
+                                <span class="text-white font-medium text-sm"><i class="fa-solid fa-square-parking text-warmOrange mr-1.5"></i>駐車場10台</span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </section>
+        </div>
+        <!-- 7. 店舗情報・アクセス / Info & Access -->
+        <section id="info" class="py-16 sm:py-24 bg-cream-dark/60 border-t border-wood/10">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+
+                <!-- セクションタイトル -->
+                <div class="text-center space-y-2 mb-12">
+                    <span class="text-vermilion font-serif font-bold tracking-widest text-sm uppercase">Information</span>
+                    <h2 class="text-2xl sm:text-3xl lg:text-4xl font-serif font-bold text-wood">店舗情報・アクセス</h2>
+                    <div class="w-12 h-0.5 bg-vermilion mx-auto mt-4"></div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+
+                    <!-- 店舗基本情報 -->
+                    <div class="lg:col-span-7 bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-wood/10 space-y-6">
+
+                        <div class="flex items-center gap-3 pb-4 border-b border-wood/10">
+                            <span class="w-12 h-12 rounded-full bg-cream-dark flex items-center justify-center overflow-hidden">
+                                <img src="images/nikukyu.png" alt="" class="w-full h-full object-contain p-1">
+                            </span>
+                            <div>
+                                <h3 class="font-serif font-bold text-xl text-wood">ごはんやさん　わさび</h3>
+                                <p class="text-xs text-wood-light">ゴハンヤサン　ワサビ</p>
+                            </div>
+                        </div>
+
+                        <dl class="space-y-4 text-sm text-text-dark" style="color: var(--text-dark);">
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-1 sm:gap-4 py-2 border-b border-wood/10">
+                                <dt class="font-bold text-wood flex items-center gap-2">
+                                    <i class="fa-solid fa-clock text-warmOrange w-4"></i> 営業時間
+                                </dt>
+                                <dd class="sm:col-span-2">
+                                    <p><strong>昼の部：</strong>11:00 〜 14:00（L.O. 13:30）</p>
+                                    <p class="mt-1"><strong>夜の部：</strong>17:00 〜 21:00（L.O. 20:30）</p>
+                                </dd>
+                            </div>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-1 sm:gap-4 py-2 border-b border-wood/10">
+                                <dt class="font-bold text-wood flex items-center gap-2">
+                                    <i class="fa-solid fa-calendar-xmark text-warmOrange w-4"></i> 定休日
+                                </dt>
+                                <dd class="sm:col-span-2">
+                                    毎週火・水曜日　(祝日は通常通り営業)
+                                </dd>
+                            </div>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-1 sm:gap-4 py-2 border-b border-wood/10">
+                                <dt class="font-bold text-wood flex items-center gap-2">
+                                    <i class="fa-solid fa-location-dot text-warmOrange w-4"></i> 住所
+                                </dt>
+                                <dd class="sm:col-span-2">
+                                    〒329-2921<br>
+                                    栃木県那須塩原市塩原2386-1（国道400号線沿い）
+                                </dd>
+                            </div>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-1 sm:gap-4 py-2 border-b border-wood/10">
+                                <dt class="font-bold text-wood flex items-center gap-2">
+                                    <i class="fa-solid fa-square-parking text-warmOrange w-4"></i> 駐車場
+                                </dt>
+                                <dd class="sm:col-span-2">
+                                    店舗に合計10台（無料・大型車要相談）
+                                </dd>
+                            </div>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-1 sm:gap-4 py-2 border-b border-wood/10">
+                                <dt class="font-bold text-wood flex items-center gap-2">
+                                    <i class="fa-solid fa-chair text-warmOrange w-4"></i> 席数
+                                </dt>
+                                <dd class="sm:col-span-2">
+                                    12席（カウンター2席 / テーブル10席）
+                                </dd>
+                            </div>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-1 sm:gap-4 py-2">
+                                <dt class="font-bold text-wood flex items-center gap-2">
+                                    <i class="fa-solid fa-wallet text-warmOrange w-4"></i> お支払い
+                                </dt>
+                                <dd class="sm:col-span-2 flex flex-wrap gap-2 items-center">
+                                    <span class="bg-cream-dark px-2.5 py-1 rounded text-xs">現金</span>
+                                    <span class="bg-cream-dark px-2.5 py-1 rounded text-xs">各種コード決済</span>
+                                    <span class="bg-cream-dark px-2.5 py-1 rounded text-xs">クレジットカード</span>
+                                    <span class="bg-cream-dark px-2.5 py-1 rounded text-xs">交通系</span>
+                                </dd>
+                            </div>
+                        </dl>
+
+                        <!-- 電話ボタン -->
+                        <div class="pt-4 border-t border-wood/10 text-center">
+                            <a href="tel:07037768413" class="inline-flex items-center justify-center gap-2 bg-warmOrange hover:bg-vermilion-dark text-white font-bold px-8 py-3.5 rounded-full shadow-lg transition-all w-full sm:w-auto">
+                                <i class="fa-solid fa-phone text-lg"></i>
+                                <span class="text-lg">070-3776-8413</span>
+                            </a>
+                        </div>
+
+                    </div>
+
+                    <!-- Google Maps -->
+                    <div class="lg:col-span-5 space-y-4">
+                        <div class="bg-white rounded-2xl p-2 shadow-sm border border-wood/10 h-[380px] sm:h-[450px] relative overflow-hidden">
+                            <iframe
+                                title="店舗位置マップ"
+                                class="w-full h-full rounded-xl"
+                                src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d204353.1585704637!2d139.6889622!3d36.8420425!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x601f9183dab3c473%3A0x48c87657620abc24!2z44GU44Gv44KT44KE44GV44KTIOOCj-OBleOBsw!5e0!3m2!1sja!2sjp!4v1794198129120!5m2!1sja!2sjp"
+                                style="border:0;"
+                                allowfullscreen
+                                loading="lazy"
+                                referrerpolicy="no-referrer-when-downgrade">
+                            </iframe>
+                        </div>
+
+                        <a href="https://maps.google.com" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 bg-white hover:bg-cream text-wood-dark border border-wood/20 font-medium px-4 py-2.5 rounded-xl text-xs shadow-sm transition-all text-center">
+                            <i class="fa-solid fa-map-location-dot text-vermilion"></i>
+                            <span>Googleマップアプリで経路を調べる</span>
+                        </a>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <!-- 8. フッター / Footer（背景・文字色・余白は style.css の footer に合わせる） -->
+    <footer>
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
+
+            <div class="flex items-center justify-center gap-2">
+                <span class="w-8 h-8 rounded-full bg-white flex items-center justify-center overflow-hidden">
+                    <img src="images/nikukyu.png" alt="" class="w-full h-full object-contain p-0.5">
+                </span>
+                <span class="text-2xl font-serif font-bold tracking-wider text-white">ごはんやさん わさび</span>
+            </div>
+
+            <p class="text-xs sm:text-sm max-w-md mx-auto leading-relaxed">
+                地元で愛される味をめざして、心を込めて営業中。<br>皆様のご来店を心よりお待ちしております。
+            </p>
+
+            <div class="flex justify-center space-x-6 text-sm">
+                <a href="#notice" class="hover:text-white transition-colors">お知らせ</a>
+                <a href="#about" class="hover:text-white transition-colors">こだわり</a>
+                <a href="#menu" class="hover:text-white transition-colors">お品書き</a>
+                <a href="#info" class="hover:text-white transition-colors">店舗情報</a>
+            </div>
+
+            <div class="pt-6 border-t border-white/20 text-xs">
+                <p>&copy; 2026 ごはんやさん　わさび All Rights Reserved.</p>
+            </div>
+
+        </div>
+    </footer>
+
+    <!-- お品書き拡大モーダル（style.css の .modal 系を使用） -->
+    <div id="menu-modal" class="modal" onclick="closeModal()">
+        <span class="modal-close" onclick="closeModal()" aria-label="閉じる">&times;</span>
+        <img class="modal-content" src="images/menu.png" alt="メニュー表（拡大）" onclick="event.stopPropagation()">
+    </div>
+
+    <script>
+        // モバイルナビゲーション開閉
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuIcon = document.getElementById('menu-icon');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            const isHidden = mobileMenu.classList.contains('hidden');
+            menuIcon.classList.toggle('fa-bars', isHidden);
+            menuIcon.classList.toggle('fa-xmark', !isHidden);
+        });
+
+        // モバイルメニューのリンクタップで自動閉じ
+        document.querySelectorAll('.mobile-link').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                menuIcon.classList.remove('fa-xmark');
+                menuIcon.classList.add('fa-bars');
+            });
+        });
+
+        // お品書き画像の拡大表示
+        const menuModal = document.getElementById('menu-modal');
+
+        function openModal() {
+            menuModal.classList.add('active');
+        }
+
+        function closeModal() {
+            menuModal.classList.remove('active');
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
+        const CLASSNAME = "-visible";
+        const TIMEOUT = 1500;
+        const $target = $(".title");
+
+        setInterval(() =>{
+            $target.addClass(CLASSNAME);
+            setTimeout(()=> {
+                $target.removeClass(CLASSNAME);
+            }, TIMEOUT);
+        },TIMEOUT*2);
+    </script>
+</body>
+</html>
