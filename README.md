@@ -1,2 +1,2 @@
-# [gohannya_wasabi](https://gohanyawasabi.github.io/gohannya_wasabi/)
-ご飯屋わさびのwebサイト
+# [ごはんやさん わさび](https://gohanyawasabi.github.io/gohannya_wasabi/)
+ごはんやさん わさびのホームページ
