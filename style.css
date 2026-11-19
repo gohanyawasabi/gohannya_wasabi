@@ -146,6 +146,9 @@
             text-align: center;
             padding: 24px 20px;
             border-bottom: 4px solid var(--accent-vermilion);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
 
         .header-logo {
@@ -718,9 +721,4 @@ iframe {
     .thumbnail .title2 {
         font-size: 18px;
     }
-}
-header {
-    position: sticky;
-    top: 0;
-    z-index: 1000;
 }
