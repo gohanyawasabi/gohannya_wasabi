@@ -482,6 +482,8 @@
         /* スマホ用調整 */
         @media (max-width: 600px) {
             .hero-title { font-size: 1.6rem; }
+            .title{font-size: 25px;}
+            .title2{font-size: 10px}
             .info-table th { width: 35%; }
             .info-table th, .info-table td { font-size: 0.85rem; padding: 10px 8px; }
         }
